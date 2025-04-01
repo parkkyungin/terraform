@@ -17,11 +17,12 @@ resource "aws_instance" "my_ec2" {
 
   user_data = <<-EOF
     #!/bin/bash
+    TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
     yum update -y
     yum install -y httpd
     systemctl start httpd
     systemctl enable httpd
-    INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+    INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/instance-id)
     echo "<html><body><h1>My EC2 Instance: $INSTANCE_ID</h1></body></html>" > /var/www/html/index.html
   EOF
 
