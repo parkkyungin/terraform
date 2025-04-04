@@ -81,7 +81,7 @@ resource "aws_instance" "my" {
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.my.id
   vpc_security_group_ids = [aws_security_group.my_sg.id]
-  key_name   = "my-ssh-key"
+  key_name   = "my-key"
   tags = {
     Name = "MY-EC2"
   }

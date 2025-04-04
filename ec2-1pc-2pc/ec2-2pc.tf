@@ -118,7 +118,19 @@ resource "aws_instance" "public" {
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public1.id
   vpc_security_group_ids = [aws_security_group.public_sg.id]
-  key_name   = "my-ssh-key"
+  key_name   = "my-key"
+
+  user_data = <<-EOF
+        #!/bin/bash
+        yum update -y
+        yum install -y httpd
+        systemctl start httpd
+        systemctl enable httpd
+        echo "<h1>server-1</h1>" > /var/www/html/index.html
+        mkdir /var/www/html/dev/
+        echo "<h1>server-1:dev</h1>" > /var/www/html/dev/index.html
+EOF
+
   tags = {
     Name = "SERVER-1"
   }
@@ -130,7 +142,19 @@ resource "aws_instance" "public1" {
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public2.id
   vpc_security_group_ids = [aws_security_group.public_sg.id]
-  key_name   = "my-ssh-key"
+  key_name   = "my-key"
+
+  user_data = <<-EOF
+        #!/bin/bash
+        yum update -y
+        yum install -y httpd
+        systemctl start httpd
+        systemctl enable httpd
+        echo "<h1>server-2</h1>" > /var/www/html/index.html
+        mkdir /var/www/html/mgt/
+        echo "<h1>server-2:mgt</h1>" > /var/www/html/mgt/index.html
+EOF
+
   tags = {
     Name = "SERVER-2"
   }
@@ -142,7 +166,19 @@ resource "aws_instance" "public2" {
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public2.id
   vpc_security_group_ids = [aws_security_group.public_sg.id]
-  key_name   = "my-ssh-key"
+  key_name   = "my-key"
+
+  user_data = <<-EOF
+        #!/bin/bash
+        yum update -y
+        yum install -y httpd
+        systemctl start httpd
+        systemctl enable httpd
+        echo "<h1>server-3</h1>" > /var/www/html/index.html
+        mkdir /var/www/html/mgt/
+        echo "<h1>server-3:mgt</h1>" > /var/www/html/mgt/index.html
+EOF
+
   tags = {
     Name = "SERVER-3"
   }
