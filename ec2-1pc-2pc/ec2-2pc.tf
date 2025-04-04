@@ -126,9 +126,9 @@ resource "aws_instance" "public" {
         yum install -y httpd
         systemctl start httpd
         systemctl enable httpd
-        echo "<h1>server-1</h1>" > /var/www/html/index.html
-        mkdir /var/www/html/dev/
-        echo "<h1>server-1:dev</h1>" > /var/www/html/dev/index.html
+        TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+        INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/instance-id)
+        echo "<html><body><h1>My EC2 Instance: $INSTANCE_ID</h1></body></html>" > /var/www/html/index.html
 EOF
 
   tags = {
@@ -150,9 +150,9 @@ resource "aws_instance" "public1" {
         yum install -y httpd
         systemctl start httpd
         systemctl enable httpd
-        echo "<h1>server-2</h1>" > /var/www/html/index.html
-        mkdir /var/www/html/mgt/
-        echo "<h1>server-2:mgt</h1>" > /var/www/html/mgt/index.html
+        TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+        INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/instance-id)
+        echo "<html><body><h1>My EC2 Instance: $INSTANCE_ID</h1></body></html>" > /var/www/html/index.html
 EOF
 
   tags = {
@@ -174,9 +174,9 @@ resource "aws_instance" "public2" {
         yum install -y httpd
         systemctl start httpd
         systemctl enable httpd
-        echo "<h1>server-3</h1>" > /var/www/html/index.html
-        mkdir /var/www/html/mgt/
-        echo "<h1>server-3:mgt</h1>" > /var/www/html/mgt/index.html
+        TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+        INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/instance-id)
+        echo "<html><body><h1>My EC2 Instance: $INSTANCE_ID</h1></body></html>" > /var/www/html/index.html
 EOF
 
   tags = {
